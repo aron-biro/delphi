@@ -12,11 +12,13 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 const form = useForm({
     name: "",
     email: "",
+    is_doctor: false,
     password: "",
     password_confirmation: "",
 });
 
 const submit = () => {
+    console.log("alma");
     form.post(route("register"), {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
@@ -125,7 +127,7 @@ const submit = () => {
 
                     <div class="mt-4 flex items-center justify-between">
                         <InputLabel>I'm a doctor</InputLabel>
-                        <ToggleButton></ToggleButton>
+                        <ToggleButton v-model="form.is_doctor"></ToggleButton>
                     </div>
 
                     <AuthButton
