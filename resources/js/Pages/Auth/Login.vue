@@ -121,6 +121,12 @@ const submit = () => {
                     >
                         Log in
                     </AuthButton>
+                    <AuthButton
+                        class="mt-4 justify-center items-center"
+                        :disabled="form.processing"
+                    >
+                        <a href="auth/google">Login with Google</a>
+                    </AuthButton>
 
                     <Link
                         v-if="canResetPassword"

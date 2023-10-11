@@ -141,7 +141,7 @@ const submit = () => {
                         class="mt-4 justify-center items-center"
                         :disabled="form.processing"
                     >
-                        PLACEHOLDER FOR 0AUTH
+                        <a href="auth/google">Sign Up with Google</a>
                     </AuthButton>
 
                     <div
