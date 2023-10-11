@@ -102,40 +102,29 @@ const submit = () => {
                         />
                     </div>
 
-                    <div class="block mt-4">
-                        <label class="flex items-center">
-                            <Checkbox
-                                name="remember"
-                                v-model:checked="form.remember"
-                            />
-                            <span class="ml-2 text-sm text-gray-600"
-                                >Remember me</span
-                            >
-                        </label>
-                    </div>
+            <div class="flex items-center justify-end mt-4 flex-col">
+                <Link
+                    v-if="canResetPassword"
+                    :href="route('password.request')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Forgot your password?
+                </Link>
 
-                    <AuthButton
+                    <PrimaryButton
                         class="my-6 flex justify-center items-center"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
                         Log in
-                    </AuthButton>
-                    <AuthButton
+                    </PrimaryButton>
+                    <div
                         class="mt-4 justify-center items-center"
                         :disabled="form.processing"
                     >
                         <a href="auth/google">Login with Google</a>
-                    </AuthButton>
+                    </div>
 
-                    <Link
-                        v-if="canResetPassword"
-                        :href="route('password.request')"
-                        class="text-sm text-primary hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                    >
-                        Forgot your password?
-                    </Link>
-                </form>
             </div>
         </div>
     </div>
