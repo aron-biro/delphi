@@ -130,19 +130,16 @@ const submit = () => {
                         <ToggleButton v-model="form.is_doctor"></ToggleButton>
                     </div>
 
-                    <PrimaryButton
+                    <AuthButton
                         class="mt-6 justify-center items-center"
                         :disabled="form.processing"
                     >
                         Register
-                    </PrimaryButton>
+                    </AuthButton>
 
-                    <div
-                        class="mt-4 justify-center items-center"
-                        :disabled="form.processing"
-                    >
-                        <a href="auth/google">Sign Up with Google</a>
-                    </div>
+
+                  <a class="flex justify-center mt-4" href="auth/google">Sign Up with Google</a>
+
 
                     <div
                         class="mt-4 flex justify-center items-center space-x-2"
@@ -155,7 +152,8 @@ const submit = () => {
                             Login
                         </Link>
                     </div>
-            </div>
+                  </form>
         </div>
     </div>
+      </div>
 </template>

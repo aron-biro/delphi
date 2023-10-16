@@ -10,7 +10,7 @@ class GoogleController extends Controller
 {
     public function googlePage()
     {
-        return socialite::driver('google')->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function googleCallback()
