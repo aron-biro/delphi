@@ -137,9 +137,7 @@ const submit = () => {
                         Register
                     </AuthButton>
 
-
                   <a class="flex justify-center mt-4" href="auth/google">Sign Up with Google</a>
-
 
                     <div
                         class="mt-4 flex justify-center items-center space-x-2"

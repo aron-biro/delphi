@@ -90,7 +90,7 @@ const submit = () => {
                             Log in
                         </AuthButton>
 
-                            <a href="auth/google">Login with Google</a>
+                        <a href="auth/google">Login with Google</a>
 
 
                         <Link
