@@ -137,12 +137,9 @@ const submit = () => {
                         Register
                     </AuthButton>
 
-                    <AuthButton
-                        class="mt-4 justify-center items-center"
-                        :disabled="form.processing"
-                    >
-                        PLACEHOLDER FOR 0AUTH
-                    </AuthButton>
+
+                  <a class="flex justify-center mt-4" href="auth/google">Sign Up with Google</a>
+
 
                     <div
                         class="mt-4 flex justify-center items-center space-x-2"
@@ -155,8 +152,8 @@ const submit = () => {
                             Login
                         </Link>
                     </div>
-                </form>
-            </div>
+                  </form>
         </div>
     </div>
+      </div>
 </template>
