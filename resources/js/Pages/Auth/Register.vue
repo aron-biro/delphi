@@ -30,7 +30,7 @@ const submit = () => {
         <div
             class="bg-primary w-1/3 text-white flex flex-col justify-between p-10"
         >
-            <ApplicationLogo />
+            <ApplicationLogo text-size="5xl" text-color="white"/>
             <div class="flex justify-between text-sm">
                 <div class="flex items-center space-x-2">
                     <p>Dephi 2022</p>

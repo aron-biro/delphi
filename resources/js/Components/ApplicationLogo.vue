@@ -1,8 +1,17 @@
 <template>
-    <div class="text-5xl font-bold">Delphi</div>
+    <div :class="`text-${textSize} font-bold text-${textColor}`">Delphi</div>
 </template>
 
-<script>
-
+<script setup>
+const props = defineProps({
+  textColor: {
+    type: String,
+    required: true,
+  },
+  textSize:{
+    type: String,
+    required: true,
+  }
+});
 
 </script>
