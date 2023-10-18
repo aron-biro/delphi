@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/6 h-screen bg-white shadow-md min-w-[200px] pl-6 pt-6 flex flex-col">
+    <div class="w-1/6 h-screen bg-white shadow-md min-w-[210px] pl-6 pt-6 flex flex-col">
         <ApplicationLogo text-color="primary" text-size="5xl"></ApplicationLogo>
         <Search class="mt-3"></Search>
         <div class="flex-grow">
