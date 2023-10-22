@@ -15,7 +15,10 @@
             </div>
             <div class="grid grid-cols-3 gap-12 mt-8">
                 <BarChartCard class="col-span-2"></BarChartCard>
-                <NextProgramationCard></NextProgramationCard>
+                <NextProgramationCard title="Next programation" date="Tuesday, August 22" time-interval="10:00-11:00"
+                                      service-type="Blood analysis" patient-name="Ana Maria"
+                                      link="/dashboard"
+                                      button-text="See more"></NextProgramationCard>
             </div>
         </div>
     </div>

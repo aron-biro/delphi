@@ -12,8 +12,7 @@ const data = {
     labels: labels,
     datasets: [{
         label: 'Programations',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: '#2970FF',
         data: [42, 10, 5, 24, 20, 30, 45, 23, 19, 60, 53, 11]
     }]
 };
@@ -21,7 +20,12 @@ const data = {
 const config = {
     type: 'bar',
     data: data,
-    options: {}
+    options: {
+        borderRadius: {
+            topLeft: 8,
+            topRight: 8,
+        },
+    }
 };
 
 onMounted(() => {
