@@ -7,19 +7,19 @@
             </div>
             <p class="mt-6 text-gray-600">{{ title }}</p>
             <div class="flex justify-between items-center">
-                <h1 class="text-xl ">{{ date }}</h1>
+                <h1 class="mt-2 text-xl ">{{ date }}</h1>
             </div>
-            <div class="flex mt-6 space-x-3 align-center">
+            <div class="flex mt-8 space-x-3 align-center">
                 <Clock></Clock>
-                <p class="text-sm text-gray-600">Between: {{ timeInterval }}</p>
+                <p class="text-gray-600">Between: {{ timeInterval }}</p>
             </div>
-            <div class="flex mt-1 space-x-2 align-center">
+            <div class="flex mt-4 space-x-2 align-center">
                 <Stethoscope stroke-color="#2970FF"></Stethoscope>
-                <p class="text-sm text-gray-600">{{ serviceType }}</p>
+                <p class="text-gray-600">{{ serviceType }}</p>
             </div>
-            <div class="flex mt-1 space-x-3 align-center">
+            <div class="flex mt-4 space-x-3 align-center">
                 <Patient></Patient>
-                <p class="text-sm text-gray-600">{{ patientName }}</p>
+                <p class="text-gray-600">{{ patientName }}</p>
             </div>
         </div>
         <div class="flex justify-end py-4 px-6 border-t-2 w-100 text-primary">
