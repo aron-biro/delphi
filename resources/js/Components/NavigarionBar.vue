@@ -1,7 +1,7 @@
 <template>
-    <div class="w-1/6 h-screen bg-white shadow-md min-w-[210px] pl-6 pt-6 flex flex-col">
+    <div class="w-1/6 h-screen bg-white shadow-md min-w-[210px] pl-6 pt-6 flex flex-col fixed ">
         <ApplicationLogo text-color="primary" text-size="5xl"></ApplicationLogo>
-        <Search class="mt-3"></Search>
+        <Search class="mt-3 mr-6"></Search>
         <div class="flex-grow">
             <div class="flex flex-col items-start">
                 <div class="flex mt-4 space-x-4">

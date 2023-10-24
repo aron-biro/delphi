@@ -20,7 +20,7 @@ const props = defineProps({
 
 const buttonClasses = computed(function () {
     return {
-        'bg-gray-100': props.active,
+        'bg-primary-100': props.active,
         'text-primary': props.active,
         'text-gray-600': !props.active
     };

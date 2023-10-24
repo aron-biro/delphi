@@ -1,12 +1,13 @@
 <template>
-    <canvas class="max-h-80" id="myChart"></canvas>
-    {{ chartData }}<br>
-    {{ chartLabels }}
+    <Bar class="max-h-60" :data="chartData" :options="chartOptions" id="my-chart-id"/>
 </template>
 
 <script setup>
-import Chart from 'chart.js/auto';
-import {onMounted, ref, watch} from "vue";
+import {computed} from 'vue'
+import {Bar} from 'vue-chartjs'
+import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const props = defineProps({
     chartData: {
@@ -16,26 +17,29 @@ const props = defineProps({
     chartLabels: {
         type: Array,
         required: true,
+    },
+    unit: {
+        type: String,
+        required: true,
+    },
+})
+
+const chartData = computed(() => {
+    return {
+        labels: props.chartLabels,
+        datasets: [
+            {
+                label: '',
+                maxBarThickness: 40,
+                backgroundColor: '#2970FF',
+                data: props.chartData,
+            },
+        ],
     }
-});
+})
 
-const chartRef = ref(null);
-
-const data = {
-    labels: props.chartLabels,
-    datasets: [{
-        label: '',
-        maxBarThickness: 36,
-        backgroundColor: '#2970FF',
-        data: props.chartData
-
-    }]
-};
-
-const config = {
-    type: 'bar',
-    data: data,
-    options: {
+const chartOptions = computed(() => {
+    return {
         borderRadius: {
             topLeft: 8,
             topRight: 8,
@@ -44,14 +48,14 @@ const config = {
             x: {
                 title: {
                     display: true,
-                    text: 'Months',
+                    text: props.unit,
                     padding: {
                         top: 15,
                     },
                 },
                 grid: {
                     display: false,
-                }
+                },
             },
             y: {
                 stacked: true,
@@ -70,36 +74,7 @@ const config = {
                 align: 'start',
                 display: false,
             },
-        },
+        }
     }
-};
-
-onMounted(() => {
-    chartRef.value = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
 })
-
-function addData(chart, newLabels, newData) {
-    chart.data.labels.push(...newLabels);
-    chart.data.datasets[0].data.push(...newData);
-    chart.update();
-}
-
-function removeData(chart) {
-    chart.data.labels = [];
-    chart.data.datasets[0].data = [];
-    chart.update();
-}
-
-function updateData() {
-    removeData(chartRef.value);
-    addData(chartRef.value, props.chartLabels, props.chartData);
-}
-
-watch(props, function (newVal, oldVal) {
-    updateData();
-});
-
 </script>

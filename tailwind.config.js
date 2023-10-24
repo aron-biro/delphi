@@ -18,7 +18,8 @@ export default {
             colors: {
                 primary: '#2970FF',
                 'primary-100': '#EFF4FF',
-                'primary-200': '#D1E0FF'
+                'primary-200': '#D1E0FF',
+                'gray-150': '#EAECF0',
             },
         },
     },
