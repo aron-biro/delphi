@@ -5,7 +5,7 @@
                 <GrowthIndicator custom-icon="Growth" custom-bg-color="green"></GrowthIndicator>
                 <Options></Options>
             </div>
-            <p class="mt-6 text-sm text-gray-600">{{ title }}</p>
+            <p class="my-6 text-sm text-gray-600">{{ title }}</p>
             <div class="flex justify-between items-center">
                 <h1 class="mt-3 text-3xl font-bold">{{ count }}</h1>
                 <div class="flex items-center text-sm py-1 px-2 bg-green-100 rounded-full text-green-800">

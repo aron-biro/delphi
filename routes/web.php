@@ -5,6 +5,7 @@ use App\Http\Controllers\GoogleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Services;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -16,7 +17,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+
+    return Inertia::render('Dashboard', [
+        'services' => Services::paginate(10),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -28,4 +32,4 @@ Route::middleware('auth')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'googlePage']);
 Route::get('auth/google/callback', [GoogleController::class, 'googleCallback']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
