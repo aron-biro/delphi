@@ -6,9 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
 class ServicesFactory extends Factory
 {
     /**
@@ -19,12 +16,13 @@ class ServicesFactory extends Factory
     {
         return [
             'user_id' => 4,
-            'price' => fake()->randomDigit(),
-            'started_at' => Carbon::now()->toDate(),
-            'ended_at' => Carbon::now()->addWeek()->toDate(),
+            'title' => 'Service ' . $this->faker->randomNumber(),
+            'price' => $this->faker->randomDigit(),
+            'started_at' => Carbon::now(),
+            'ended_at' => Carbon::now()->addWeek(),
             'available_from' => '12',
             'available_until' => '18',
-            'description' => fake()->text(),
+            'description' => $this->faker->text(),
             'duration' => 4,
         ];
     }

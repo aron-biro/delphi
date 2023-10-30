@@ -2,53 +2,69 @@
     <div class="rounded-lg border overflow-hidden">
         <table class="w-full">
             <colgroup>
-                <col class="w-1/4">
-                <col class="w-1/4">
-                <col class="w-1/4">
-                <col class="w-1/4">
+                <col class="w-1/4" />
+                <col class="w-1/4" />
+                <col class="w-1/4" />
+                <col class="w-1/4" />
             </colgroup>
             <thead>
-            <tr class="border-b h-10 bg-gray-150 text-sm text-gray-500 font-normal">
-                <th class="text-left px-6">Speciality</th>
-                <th class="text-left px-6">Nr of programations</th>
-                <th class="text-left px-6">Net income</th>
-                <th class="text-right px-6"></th>
-            </tr>
+                <tr
+                    class="border-b h-10 bg-gray-150 text-sm text-gray-500 font-normal"
+                >
+                    <th class="text-left px-6">Speciality</th>
+                    <th class="text-left px-6">Nr of programations</th>
+                    <th class="text-left px-6">Net income</th>
+                    <th class="text-right px-6"></th>
+                </tr>
             </thead>
             <tbody class="bg-white">
-            <tr class="h-16 border-b" v-for="specialty in specialties" :key="specialty.id">
-                <td class="px-6 font-bold">{{ specialty.name }}</td>
-                <td class="px-6 text-gray-500">{{ specialty.programation }}</td>
-                <td class="px-6 text-gray-500">{{ specialty.income }} lei</td>
-                <td class="text-right px-6 space-x-4">
-                    <button @click="updateSpecialty()">update</button>
-                    <button @click="deleteSpecialty()">delete</button>
-                </td>
-            </tr>
+                <tr
+                    class="h-16 border-b"
+                    v-for="specialty in specialties"
+                    :key="specialty.index"
+                >
+                    <td class="px-6 font-bold">{{ specialty.service_name }}</td>
+                    <td class="px-6 text-gray-500">
+                        {{ specialty.total_appointments }}
+                    </td>
+                    <td class="px-6 text-gray-500">
+                        {{ specialty.total_income }} lei
+                    </td>
+                    <td class="text-right px-6 space-x-4">
+                        <button @click="updateSpecialty()">update</button>
+                        <button @click="deleteSpecialty()">delete</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="flex bg-white py-4 px-6 w-full justify-between">
             <div>Page {{ currentPage }} of {{ maxPage }}</div>
             <div class="flex space-x-4">
-                <button @click="previousPage" :disabled="currentPage === 1">Previous</button>
-                <button @click="nextPage" :disabled="currentPage * itemsPerPage >= specialties.length">Next</button>
+                <button @click="previousPage" :disabled="currentPage === 1">
+                    Previous
+                </button>
+                <button
+                    @click="nextPage"
+                    :disabled="currentPage * itemsPerPage >= specialties.length"
+                >
+                    Next
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import {computed, defineProps, ref} from 'vue';
+import { computed, defineProps, ref } from "vue";
 
 const props = defineProps({
     specialties: {
         type: Array,
-        required: true
-    }
-
+        required: true,
+    },
 });
 
-console.log(props.specialties)
+console.log(props.specialties);
 
 const currentPage = ref(1);
 const maxPage = ref(10);
@@ -60,14 +76,9 @@ const paginatedSpecialties = computed(() => {
     return props.specialties.slice(startIndex, endIndex);
 });
 
+function updateSpecialty() {}
 
-function updateSpecialty() {
-}
-
-
-function deleteSpecialty() {
-}
-
+function deleteSpecialty() {}
 
 function previousPage() {
     if (currentPage > 1) {
@@ -81,5 +92,3 @@ function nextPage() {
     }
 }
 </script>
-
-
