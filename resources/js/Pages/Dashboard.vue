@@ -52,7 +52,7 @@
                         <span
                             class="ml-2 bg-primary-200 text-primary rounded-full text-sm px-2 justify-center h-full"
                         >
-                            {{ numberOfDoctors }} doctors
+                            {{ page.props.doctorCount }} doctors
                         </span>
                     </div>
                     <div class="text-sm text-gray-500">
@@ -61,7 +61,7 @@
                 </div>
                 <SearchBar class="ml-8"></SearchBar>
             </div>
-            <BaseTable :specialties="page.props.income"></BaseTable>
+            <BaseTable :specialties="page.props.income.data"></BaseTable>
         </div>
     </div>
 </template>
@@ -71,15 +71,30 @@ import NavigationBar from "@/Components/NavigarionBar.vue";
 import AnalyticsCard from "@/Components/AnalyticsCard.vue";
 import BarChartCard from "@/Components/BarChartCard.vue";
 import NextProgramationCard from "@/Components/NextProgramationCard.vue";
-import { ref } from "vue";
 import SearchBar from "@/Components/SearchBar.vue";
 import BaseTable from "@/Components/BaseTable.vue";
 import { usePage } from "@inertiajs/vue3";
-
-const numberOfDoctors = ref("7");
+import { computed } from "vue";
 
 const page = usePage();
 
-// console.log(page.props.income);
-// console.log(page.props.allAppointments);
+console.log(page.props);
+
+const closestAppointment = computed(() => {
+    const currentDateTime = new Date();
+
+    const futureAppointments = page.props.appointments.filter((appointment) => {
+        return new Date(appointment.appointment_date) > currentDateTime;
+    });
+
+    futureAppointments.sort(
+        (a, b) => new Date(a.appointment_date) - new Date(b.appointment_date)
+    );
+
+    if (futureAppointments.length > 0) {
+        return futureAppointments[0];
+    } else {
+        return null;
+    }
+});
 </script>

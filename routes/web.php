@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,30 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// Route::get('/general', function () {
+//     return Inertia::render('General');
+// })->middleware(['auth', 'verified'])->name('general');
+
+// Route::get('/programations', function () {
+//     return Inertia::render('Programations');
+// })->middleware(['auth', 'verified'])->name('programations');
+
+// Route::get('/patients', function () {
+//     return Inertia::render('Patients');
+// })->middleware(['auth', 'verified'])->name('patients');
+
+// Route::get('/services', function () {
+//     return Inertia::render('Services');
+// })->middleware(['auth', 'verified'])->name('services');
+
+Route::get('/doctors', function () {
+    return Inertia::render('Doctors');
+})->middleware(['auth', 'verified'])->name('doctors');
+
+// Route::get('/statistics', function () {
+//     return Inertia::render('Statistics');
+// })->middleware(['auth', 'verified'])->name('statistics');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

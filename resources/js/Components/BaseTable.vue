@@ -31,8 +31,12 @@
                         {{ specialty.total_income }} lei
                     </td>
                     <td class="text-right px-6 space-x-4">
-                        <button @click="updateSpecialty()">update</button>
-                        <button @click="deleteSpecialty()">delete</button>
+                        <button @click="updateSpecialty()">
+                            <Pencil></Pencil>
+                        </button>
+                        <button @click="deleteSpecialty()">
+                            <Trash></Trash>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -56,6 +60,8 @@
 
 <script setup>
 import { computed, defineProps, ref } from "vue";
+import Pencil from "../Components/Icons/Pencil.vue";
+import Trash from "../Components/Icons/Trash.vue";
 
 const props = defineProps({
     specialties: {
