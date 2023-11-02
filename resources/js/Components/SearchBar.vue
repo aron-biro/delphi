@@ -4,8 +4,7 @@
             <SearchIcon></SearchIcon>
             <input
                 v-model="searchQuery"
-                @input="performSearch"
-                class="border-0 w-full focus:outline-none focus:ring-0 rounded-md w-full"
+                class="border-0 focus:outline-none focus:ring-0 rounded-md w-full"
                 placeholder="Search"
             />
         </div>
@@ -13,14 +12,19 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
 import SearchIcon from "@/Components/Icons/SearchIcon.vue";
+import { computed } from "vue";
+const props = defineProps({
+    modelValue: {
+        type: String,
+        required: true,
+    },
+});
 
-const searchQuery = ref('');
-const searchResults = ref([]);
+const emits = defineEmits(["update:modelValue"]);
 
-function performSearch() {
-    searchResults.value = ['Result 1', 'Result 2', 'Result 3'];
-}
+const searchQuery = computed({
+    get: () => props.modelValue,
+    set: (value) => emits("update:modelValue", value),
+});
 </script>
-

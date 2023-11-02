@@ -52,16 +52,25 @@
                         <span
                             class="ml-2 bg-primary-200 text-primary rounded-full text-sm px-2 justify-center h-full"
                         >
-                            {{ page.props.doctorCount }} doctors
+                            {{ usepage.props.doctorCount }} doctors
                         </span>
                     </div>
                     <div class="text-sm text-gray-500">
                         Monitor the income and progress of the clinic
                     </div>
                 </div>
-                <SearchBar class="ml-8"></SearchBar>
+                <SearchBar
+                    v-model="search"
+                    @update:model-value="changeSearch"
+                    class="ml-8"
+                ></SearchBar>
             </div>
-            <BaseTable :specialties="page.props.income.data"></BaseTable>
+            <BaseTable
+                :specialties="usepage.props.income.data"
+                :maxPage="usepage.props.income.last_page"
+                :currentPage="usepage.props.income.current_page"
+                @page="changePage"
+            ></BaseTable>
         </div>
     </div>
 </template>
@@ -73,19 +82,24 @@ import BarChartCard from "@/Components/BarChartCard.vue";
 import NextProgramationCard from "@/Components/NextProgramationCard.vue";
 import SearchBar from "@/Components/SearchBar.vue";
 import BaseTable from "@/Components/BaseTable.vue";
-import { usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { usePage, router } from "@inertiajs/vue3";
+import { computed, ref } from "vue";
+import debounce from "lodash";
 
-const page = usePage();
+const usepage = usePage();
+const search = ref(usepage.props.search);
+const page = ref(usepage.props.income.current_page);
 
-console.log(page.props);
+console.log(usepage.props);
 
 const closestAppointment = computed(() => {
     const currentDateTime = new Date();
 
-    const futureAppointments = page.props.appointments.filter((appointment) => {
-        return new Date(appointment.appointment_date) > currentDateTime;
-    });
+    const futureAppointments = usepage.props.appointments.filter(
+        (appointment) => {
+            return new Date(appointment.appointment_date) > currentDateTime;
+        }
+    );
 
     futureAppointments.sort(
         (a, b) => new Date(a.appointment_date) - new Date(b.appointment_date)
@@ -97,4 +111,18 @@ const closestAppointment = computed(() => {
         return null;
     }
 });
+
+function changePage(page) {
+    router.get(
+        "/dashboard",
+        { page, ...(search.value && { search: search.value }) },
+        { replace: true, preserveScroll: true }
+    );
+}
+
+function changeSearch(search) {
+    debounce(() => {
+        console.log("asd");
+    }, 500);
+}
 </script>

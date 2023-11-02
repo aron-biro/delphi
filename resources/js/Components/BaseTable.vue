@@ -44,15 +44,8 @@
         <div class="flex bg-white py-4 px-6 w-full justify-between">
             <div>Page {{ currentPage }} of {{ maxPage }}</div>
             <div class="flex space-x-4">
-                <button @click="previousPage" :disabled="currentPage === 1">
-                    Previous
-                </button>
-                <button
-                    @click="nextPage"
-                    :disabled="currentPage * itemsPerPage >= specialties.length"
-                >
-                    Next
-                </button>
+                <button @click="previousPage">Previous</button>
+                <button @click="nextPage">Next</button>
             </div>
         </div>
     </div>
@@ -68,32 +61,37 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    maxPage: {
+        type: Number,
+        required: true,
+    },
+    currentPage: {
+        type: Number,
+        required: true,
+    },
 });
 
-console.log(props.specialties);
+const emits = defineEmits(["page"]);
 
-const currentPage = ref(1);
-const maxPage = ref(10);
+const currentPage = computed({
+    get: () => props.currentPage,
+    set: (value) => emits("page", value),
+});
+
 const itemsPerPage = 10;
-
-const paginatedSpecialties = computed(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = currentPage * itemsPerPage;
-    return props.specialties.slice(startIndex, endIndex);
-});
 
 function updateSpecialty() {}
 
 function deleteSpecialty() {}
 
 function previousPage() {
-    if (currentPage > 1) {
+    if (currentPage.value > 1) {
         currentPage.value--;
     }
 }
 
 function nextPage() {
-    if (currentPage * itemsPerPage < props.specialties.length) {
+    if (currentPage.value < props.maxPage) {
         currentPage.value++;
     }
 }
