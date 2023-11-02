@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Appointments;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -28,25 +29,32 @@ class DashboardController extends Controller
             )
             ->groupBy('services.title')->paginate(10);
 
-            $appointments = User::join('appointments', 'users.id', '=', 'appointments.user_id')
-                ->join('services', 'appointments.service_id', '=', 'services.id')
-                ->where('services.user_id', $user)
-                ->select(
-                    'users.name as user_name',
-                    'services.title as service_name',
-                    'appointments.reserved_at as appointment_date'
-                )
-                ->get();
+        $appointments = User::join('appointments', 'users.id', '=', 'appointments.user_id')
+            ->join('services', 'appointments.service_id', '=', 'services.id')
+            ->where('services.user_id', $user)
+            ->select(
+                'users.name as user_name',
+                'services.title as service_name',
+                'appointments.reserved_at as appointment_date'
+            )
+            ->get();
+
+        $lastMonthsAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->subMonth()->startOfMonth())
+            ->where('reserved_at', '<', Carbon::now()->startOfMonth())
+            ->count();
+
+        $currentMonthsAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->startOfMonth())
+            ->count();
 
         $doctorCount = User::where('is_doctor', true)->count();
-
-        //$lastMonthsEarnngs = 
 
         return Inertia::render('Dashboard', [
             'income' => $income,
             'appointments' => $appointments,
             'doctorCount' => $doctorCount,
-            'search' => $search
+            'search' => $search,
+            'lastMonthsAppointmentCount' => $lastMonthsAppointmentCount,
+            'currentMonthsAppointmentCount' => $currentMonthsAppointmentCount
         ]);
         
     }

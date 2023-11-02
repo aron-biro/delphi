@@ -61,7 +61,7 @@
                 </div>
                 <SearchBar
                     v-model="search"
-                    @update:model-value="changeSearch"
+                    @update:modelValue="handleSearch"
                     class="ml-8"
                 ></SearchBar>
             </div>
@@ -84,7 +84,7 @@ import SearchBar from "@/Components/SearchBar.vue";
 import BaseTable from "@/Components/BaseTable.vue";
 import { usePage, router } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
-import debounce from "lodash";
+import { debounce } from "lodash";
 
 const usepage = usePage();
 const search = ref(usepage.props.search);
@@ -112,6 +112,14 @@ const closestAppointment = computed(() => {
     }
 });
 
+const changeSearch = debounce((searchSentence) => {
+    router.get(
+        "/dashboard",
+        { page: 1, ...(searchSentence && { search: searchSentence }) },
+        { replace: true, preserveScroll: true }
+    );
+}, 500);
+
 function changePage(page) {
     router.get(
         "/dashboard",
@@ -120,9 +128,7 @@ function changePage(page) {
     );
 }
 
-function changeSearch(search) {
-    debounce(() => {
-        console.log("asd");
-    }, 500);
+function handleSearch(searchSentence) {
+    changeSearch(searchSentence);
 }
 </script>
