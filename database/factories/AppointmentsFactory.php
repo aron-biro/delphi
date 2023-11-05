@@ -20,7 +20,7 @@ class AppointmentsFactory extends Factory
         return [
             'user_id' => 4,
             'service_id' => rand(1, 30),
-            'reserved_at' => Carbon::now()->toDate()
+            'reserved_at' => Carbon::now()->addMonth()->toDate()
         ];
     }
 }

@@ -39,22 +39,52 @@ class DashboardController extends Controller
             )
             ->get();
 
-        $lastMonthsAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->subMonth()->startOfMonth())
+        $currentMonthTotalIncome = Appointments::join('services', 'appointments.service_id','=', 'services.id')
+            ->where('appointments.reserved_at', '>=', Carbon::now()->startOfMonth())
+            ->sum('services.price');
+        
+        $lastMonthTotalIncome = Appointments::join('services', 'appointments.service_id','=', 'services.id')
+            ->where('appointments.reserved_at', '>=', Carbon::now()->subMonth()->startOfMonth())
+            ->where('appointments.reserved_at', '<', Carbon::now()->startOfMonth())
+            ->sum('services.price');
+
+        $lastMonthAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->subMonth()->startOfMonth())
             ->where('reserved_at', '<', Carbon::now()->startOfMonth())
             ->count();
 
-        $currentMonthsAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->startOfMonth())
+        $currentMonthAppointmentCount = Appointments::where('reserved_at', '>=', Carbon::now()->startOfMonth())
             ->count();
 
+        $lastMonthUserCount = Appointments::where('reserved_at', '>=', Carbon::now()->subMonth()->startOfMonth())
+            ->where('reserved_at', '<', Carbon::now()->startOfMonth())
+            ->distinct('user_id')
+            ->count('user_id');
+
+        $currentMonthUserCount = Appointments::where('reserved_at', '>=', Carbon::now()->startOfMonth())
+            ->distinct('user_id')
+            ->count('user_id');
+
         $doctorCount = User::where('is_doctor', true)->count();
+
+        $upcomingAppointment = Appointments::join('users', 'appointments.user_id', '=', 'users.id')
+        ->join('services', 'appointments.service_id', '=', 'services.id')
+        ->select('appointments.reserved_at as appointment_date', 'users.name as user_name', 'services.title as service_name', 'services.duration as service_duration')
+        ->where('appointments.reserved_at', '>', Carbon::now())
+        ->orderBy('appointments.reserved_at', 'asc')
+        ->first();
 
         return Inertia::render('Dashboard', [
             'income' => $income,
             'appointments' => $appointments,
             'doctorCount' => $doctorCount,
             'search' => $search,
-            'lastMonthsAppointmentCount' => $lastMonthsAppointmentCount,
-            'currentMonthsAppointmentCount' => $currentMonthsAppointmentCount
+            'currentMonthTotalIncome' => $currentMonthTotalIncome,
+            'lastMonthTotalIncome' => $lastMonthTotalIncome,
+            'lastMonthAppointmentCount' => $lastMonthAppointmentCount,
+            'currentMonthAppointmentCount' => $currentMonthAppointmentCount,
+            'lastMonthUserCount' => $lastMonthUserCount,
+            'currentMonthUserCount' => $currentMonthUserCount,
+            'upcomingAppointment' => $upcomingAppointment
         ]);
         
     }

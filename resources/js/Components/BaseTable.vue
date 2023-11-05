@@ -20,21 +20,21 @@
             <tbody class="bg-white">
                 <tr
                     class="h-16 border-b"
-                    v-for="specialty in specialties"
-                    :key="specialty.index"
+                    v-for="item in data"
+                    :key="item.index"
                 >
-                    <td class="px-6 font-bold">{{ specialty.service_name }}</td>
+                    <td class="px-6 font-bold">{{ item.service_name }}</td>
                     <td class="px-6 text-gray-500">
-                        {{ specialty.total_appointments }}
+                        {{ item.total_appointments }}
                     </td>
                     <td class="px-6 text-gray-500">
-                        {{ specialty.total_income }} lei
+                        {{ item.total_income }} lei
                     </td>
                     <td class="text-right px-6 space-x-4">
-                        <button @click="updateSpecialty()">
+                        <button @click="updateItem()">
                             <Pencil></Pencil>
                         </button>
-                        <button @click="deleteSpecialty()">
+                        <button @click="deleteItem()">
                             <Trash></Trash>
                         </button>
                     </td>
@@ -57,7 +57,7 @@ import Pencil from "../Components/Icons/Pencil.vue";
 import Trash from "../Components/Icons/Trash.vue";
 
 const props = defineProps({
-    specialties: {
+    data: {
         type: Array,
         required: true,
     },
@@ -80,9 +80,9 @@ const currentPage = computed({
 
 const itemsPerPage = 10;
 
-function updateSpecialty() {}
+function updateItem() {}
 
-function deleteSpecialty() {}
+function deleteItem() {}
 
 function previousPage() {
     if (currentPage.value > 1) {
