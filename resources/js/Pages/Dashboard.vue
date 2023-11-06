@@ -36,10 +36,20 @@
                 <BarChartCard class="col-span-2 md:mb-12"></BarChartCard>
                 <NextProgramationCard
                     title="Next programation"
-                    date="Tuesday, August 22"
-                    time-interval="10:00-11:00"
-                    service-type="Blood analysis"
-                    patient-name="Ana Maria"
+                    :date="
+                        formatDate(
+                            usepage.props.upcomingAppointment.appointment_date
+                        )
+                    "
+                    :time-interval="
+                        getHourAndMinutes(
+                            usepage.props.upcomingAppointment.appointment_date
+                        )
+                    "
+                    :service-type="
+                        usepage.props.upcomingAppointment.service_name
+                    "
+                    :patient-name="usepage.props.upcomingAppointment.user_name"
                     link="/dashboard"
                     button-text="See more"
                 >
@@ -88,7 +98,6 @@ import { debounce } from "lodash";
 
 const usepage = usePage();
 const search = ref(usepage.props.search);
-const page = ref(usepage.props.income.current_page);
 
 console.log(usepage.props);
 console.log(usepage.props.income.data);
@@ -112,44 +121,74 @@ const closestAppointment = computed(() => {
         return null;
     }
 });
-const incomePercentageDifference = computed(() => {
-    if (usepage.props.lastMonthTotalIncome === 0) {
-        return 100;
-    } else {
-        return (
-            (usepage.props.currentMonthTotalIncome /
-                usepage.props.lastMonthTotalIncome) *
-                100 -
-            100
-        );
-    }
-});
 
-const appointmetsPercentageDifference = computed(() => {
-    if (usepage.props.lastMonthAppointmentCount === 0) {
-        return 100;
-    } else {
-        return (
-            (usepage.props.currentMonthAppointmentCount /
-                usepage.props.lastMonthAppointmentCount) *
-                100 -
-            100
-        );
-    }
-});
+const incomePercentageDifference = computed(() =>
+    calculatePercentageDifference(
+        usepage.props.currentMonthTotalIncome,
+        usepage.props.lastMonthTotalIncome
+    )
+);
+const appointmetsPercentageDifference = computed(() =>
+    calculatePercentageDifference(
+        usepage.props.currentMonthAppointmentCount,
+        usepage.props.lastMonthAppointmentCount
+    )
+);
+const usersPercentageDifference = computed(() =>
+    calculatePercentageDifference(
+        usepage.props.currentMonthUserCount,
+        usepage.props.lastMonthUserCount
+    )
+);
 
-const usersPercentageDifference = computed(() => {
-    if (usepage.props.lastMonthUserCount === 0) {
+function calculatePercentageDifference(current, last) {
+    if (last === 0) {
         return 100;
     } else {
-        return (
-            (usepage.props.currentMonthUserCount /
-                usepage.props.lastMonthUserCount) *
-                100 -
-            100
-        );
+        return Math.round((current / last) * 100 - 100);
     }
-});
+}
+
+function getHourAndMinutes(dateString) {
+    const date = new Date(dateString);
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hour}:${minutes}`;
+}
+
+function formatDate(inputDate) {
+    const daysOfWeek = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+    ];
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    const date = new Date(inputDate);
+
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+
+    return `${dayOfWeek}, ${month} ${day}`;
+}
 
 const changeSearch = debounce((searchSentence) => {
     router.get(
