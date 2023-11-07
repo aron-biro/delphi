@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Appointments;
@@ -27,7 +27,8 @@ class DashboardController extends Controller
                 \DB::raw('SUM(services.price) as total_income'),
                 \DB::raw('COUNT(appointments.id) as total_appointments')
             )
-            ->groupBy('services.title')->paginate(10);
+            ->groupBy('services.title')
+            ->paginate(10);
 
         $appointments = User::join('appointments', 'users.id', '=', 'appointments.user_id')
             ->join('services', 'appointments.service_id', '=', 'services.id')
