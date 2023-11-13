@@ -22,6 +22,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/doctors', [DoctorsController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('doctors');
+
 // Route::get('/general', function () {
 //     return Inertia::render('General');
 // })->middleware(['auth', 'verified'])->name('general');
@@ -37,10 +41,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 // Route::get('/services', function () {
 //     return Inertia::render('Services');
 // })->middleware(['auth', 'verified'])->name('services');
-
-Route::get('/doctors', function () {
-    return Inertia::render('Doctors');
-})->middleware(['auth', 'verified'])->name('doctors');
 
 // Route::get('/statistics', function () {
 //     return Inertia::render('Statistics');

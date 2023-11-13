@@ -59,11 +59,12 @@
                 <div class="col-span-2">
                     <div class="text-2xl font-bold flex flex-row items-center">
                         Income sources of the clinic
-                        <span
+                        <Highlight :text="higligthText"></Highlight>
+                        <!-- <span
                             class="ml-2 bg-primary-200 text-primary rounded-full text-sm px-2 justify-center h-full"
                         >
                             {{ usepage.props.doctorCount }} doctors
-                        </span>
+                        </span> -->
                     </div>
                     <div class="text-sm text-gray-500">
                         Monitor the income and progress of the clinic
@@ -95,6 +96,7 @@ import BaseTable from "@/Components/BaseTable.vue";
 import { usePage, router } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import { debounce } from "lodash";
+import Highlight from "@/Components/Highlight.vue";
 
 const usepage = usePage();
 const search = ref(usepage.props.search);
@@ -122,18 +124,22 @@ const closestAppointment = computed(() => {
     }
 });
 
+const higligthText = computed(() => `${usepage.props.doctorCount} doctors`);
+
 const incomePercentageDifference = computed(() =>
     calculatePercentageDifference(
         usepage.props.currentMonthTotalIncome,
         usepage.props.lastMonthTotalIncome
     )
 );
+
 const appointmetsPercentageDifference = computed(() =>
     calculatePercentageDifference(
         usepage.props.currentMonthAppointmentCount,
         usepage.props.lastMonthAppointmentCount
     )
 );
+
 const usersPercentageDifference = computed(() =>
     calculatePercentageDifference(
         usepage.props.currentMonthUserCount,
