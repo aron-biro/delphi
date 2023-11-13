@@ -30,9 +30,16 @@
                         {{ item.email }}
                     </td>
                     <td class="px-6 text-gray-500">
-                        {{ item.phone_numer }}
+                        {{ getPhoneNumber(item) }}
                     </td>
-                    <td class="px-6 text-gray-500">{{ item.is_active }}</td>
+                    <td class="px-6 text-gray-500">
+                        <span
+                            class="text-sm py-1 px-2"
+                            :class="getHighlightColor(item)"
+                        >
+                            {{ getAvailability(item) }}
+                        </span>
+                    </td>
                     <td>
                         <div class="flex gap-x-4 pr-4 align-middle">
                             <button @click="updateItem()">
@@ -57,7 +64,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, ref } from "vue";
+import { computed, defineProps } from "vue";
 import Pencil from "../Components/Icons/Pencil.vue";
 import Trash from "../Components/Icons/Trash.vue";
 
@@ -86,6 +93,20 @@ const currentPage = computed({
 });
 
 const itemsPerPage = 10;
+
+function getPhoneNumber(item) {
+    return item.phone_number ? item.phone_number : "Not available";
+}
+
+function getAvailability(item) {
+    return item.is_active ? "Active" : "Inactive";
+}
+
+function getHighlightColor(item) {
+    return item.is_active
+        ? " bg-green-100 rounded-full text-green-800"
+        : " bg-red-100 rounded-full text-red-800";
+}
 
 function updateItem() {}
 
